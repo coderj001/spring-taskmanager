@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+    <body>
+        <h1>Welcome to Task Manager!</h1>
+        <p th:text="${timestamp}" style="display:none;"></p>
+        <p th:text="${message}">This text will be replaced</p>
+        <p th:text="${name}">Unknown</p>
+    </body>
+</html>
