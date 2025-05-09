@@ -5,15 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
-    private  Map<Long, Task> tasks = new HashMap<>();
+    private final Map<Long, Task> tasks = new HashMap<>();
     AtomicLong counter = new AtomicLong(0);
 
     public Map<Long, Task> getTasks() {
@@ -25,12 +25,12 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTask(){
+    public ResponseEntity<List<Task>> getAllTask() {
         return new ResponseEntity<>(new ArrayList<>(tasks.values()), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@org.jetbrains.annotations.NotNull @RequestBody Task task){
+    public ResponseEntity<Task> createTask(@org.jetbrains.annotations.NotNull @RequestBody Task task) {
         long id = counter.incrementAndGet();
         task.setID(id);
         tasks.put(id, task);
@@ -38,9 +38,9 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id){
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         Task task = tasks.get(id);
-        if (task != null){
+        if (task != null) {
             return new ResponseEntity<>(task, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,9 +59,9 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) {
         Task task = tasks.get(id);
-        if (task != null){
+        if (task != null) {
             tasks.remove(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
