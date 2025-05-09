@@ -3,7 +3,7 @@ package com.coderj001.taskmanager;
 import jakarta.persistence.*;
 
 @Entity
-public class Tasks {
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -11,9 +11,9 @@ public class Tasks {
     private String title;
     private String description;
 
-    public Tasks() {}
+    public Task() {}
 
-    public Tasks(String title, String description){
+    public Task(String title, String description){
         this.title = title;
         this.description = description;
     }
