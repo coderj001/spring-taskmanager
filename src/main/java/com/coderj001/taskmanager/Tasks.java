@@ -1,9 +1,22 @@
 package com.coderj001.taskmanager;
 
-public class Task {
+import jakarta.persistence.*;
+
+@Entity
+public class Tasks {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+    @Column(nullable = false)
     private String title;
     private String description;
+
+    public Tasks() {}
+
+    public Tasks(String title, String description){
+        this.title = title;
+        this.description = description;
+    }
 
     public Long getID() {
         return ID;
