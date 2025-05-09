@@ -16,6 +16,14 @@ public class TaskController {
     private  Map<Long, Task> tasks = new HashMap<>();
     AtomicLong counter = new AtomicLong(0);
 
+    public Map<Long, Task> getTasks() {
+        return tasks;
+    }
+
+    public AtomicLong getCounter() {
+        return counter;
+    }
+
     @GetMapping
     public ResponseEntity<List<Task>> getAllTask(){
         return new ResponseEntity<>(new ArrayList<>(tasks.values()), HttpStatus.OK);
@@ -51,11 +59,11 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Task> deleteTaskById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id){
         Task task = tasks.get(id);
         if (task != null){
             tasks.remove(id);
-            return new ResponseEntity<>(task, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
