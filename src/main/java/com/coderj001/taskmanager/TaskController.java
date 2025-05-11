@@ -22,7 +22,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@org.jetbrains.annotations.NotNull @RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task saveTask = taskRepository.save(task);
         return new ResponseEntity<>(saveTask, HttpStatus.CREATED);
     }
