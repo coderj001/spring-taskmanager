@@ -17,8 +17,10 @@ public class TaskController {
     public TaskRepository taskRepository;
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTask() {
-        return new ResponseEntity<>(new ArrayList<>(taskRepository.findAll()), HttpStatus.OK);
+    public ResponseEntity<List<Task>> getAllTask(@RequestParam(required = false) String title) {
+        if (title == null)
+            return new ResponseEntity<>(new ArrayList<>(taskRepository.findAll()), HttpStatus.OK);
+        return new ResponseEntity<>(new ArrayList<>(taskRepository.findByTitleContainingIgnoreCase(title)), HttpStatus.OK);
     }
 
     @PostMapping

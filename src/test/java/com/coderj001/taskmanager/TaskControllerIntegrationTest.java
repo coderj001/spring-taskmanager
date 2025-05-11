@@ -73,6 +73,32 @@ public class TaskControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].description").value("This is task 2"));
     }
 
+    @Test
+    void shouldFilterTasksByTitle() throws Exception {
+        Task task1 = new Task();
+        task1.setTitle("Urgent meeting");
+        task1.setDescription("Discuss important topics");
+        taskRepository.save(task1);
+
+        Task task2 = new Task();
+        task2.setTitle("Grocery shopping");
+        task2.setDescription("Buy food for the week");
+        taskRepository.save(task2);
+
+        Task task3 = new Task();
+        task3.setTitle("Test the API");
+        task3.setDescription("Write integration tests");
+        taskRepository.save(task3);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/tasks")
+                        .param("title", "test"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("Test the API"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").value("Write integration tests"));
+    }
+
 
     @Test
     void shouldReturnAllTaskGivenID() throws Exception {
